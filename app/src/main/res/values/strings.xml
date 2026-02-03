@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">AppTeatroV1</string>
+    <string name="teatrooos">Teatro</string>
+    <string name="pruebaconexion">Conectar a MySQL</string>
+</resources>
