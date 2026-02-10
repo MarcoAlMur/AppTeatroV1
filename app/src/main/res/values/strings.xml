@@ -3,4 +3,17 @@
     <string name="app_name">AppTeatroV1</string>
     <string name="teatrooos">Teatro</string>
     <string name="pruebaconexion">Conectar a MySQL</string>
+    <string name="butacas">BUTACAS</string>
+    <string name="butacastitulo">Butacas</string>
+    <string name="patio">Patio</string>
+    <string name="palco">Palco</string>
+    <string name="vip">VIP</string>
+    <string name="boton_volver">Volver</string>
+    <string name="registro">Registrarse</string>
+    <string name="nombre_registro">Nombre</string>
+    <string name="apellido_registro">Apellido</string>
+    <string name="telefono_registro">Telefono</string>
+    <string name="email_registro">Email</string>
+    <string name="password_registro">Contraseña</string>
+    <string name="crear_cuenta">Crear Cuenta</string>
 </resources>
