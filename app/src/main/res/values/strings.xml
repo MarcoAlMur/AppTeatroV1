@@ -18,7 +18,10 @@
     <string name="crear_cuenta">Crear Cuenta</string>
     <string name="login">Login</string>
     <string name="boton_acceder">Acceder</string>
-    <string name="pantalla_cliente">Pantalla Cliente</string>
+    <string name="pantalla_cliente">Conciertos Disponibles</string>
     <string name="pantalla_admin">Pantalla Admin</string>
     <string name="boton_logout">Cerrar Sesión</string>
+    <string name="cargando_conciertos">Cargando conciertos</string>
+    <string name="sesiones_disponibles">Sesiones disponibles</string>
+    <string name="ver_sesiones_disponibles">Ver sesiones disponibles</string>
 </resources>

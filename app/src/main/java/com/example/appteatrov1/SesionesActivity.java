@@ -3,7 +3,6 @@ package com.example.appteatrov1;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
-import android.content.Intent;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,45 +10,49 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.RecyclerView;
-import  androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
-public class ClienteActivity extends AppCompatActivity {
+import java.util.ArrayList;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ExecutorService;
+
+public class SesionesActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
-    ArrayList<ConciertoClass> lista;
-    ConciertoAdapterClass adapter;
+    ArrayList<SesionClass> lista;
+    SesionAdapter adapter;
     ConnectionClass connectionClass;
+    int idConcierto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_cliente);
+        setContentView(R.layout.activity_sesiones);
 
-        recyclerView = findViewById(R.id.recyclerConciertos);
+        idConcierto = getIntent().getIntExtra("id_concierto", -1);
+        String nombreConcierto = getIntent().getStringExtra("nombre_concierto");
+
+        TextView tvTitulo = findViewById(R.id.tvTitulo);
+        tvTitulo.setText("Sesiones - " + nombreConcierto);
+
+        recyclerView = findViewById(R.id.recyclerSesiones);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
         lista = new ArrayList<>();
-        adapter = new ConciertoAdapterClass(lista);
+        adapter = new SesionAdapter(lista);
         recyclerView.setAdapter(adapter);
 
+        Button btnVolver = findViewById(R.id.btnVolver);
+        btnVolver.setOnClickListener(v -> finish());
+
         connectionClass = new ConnectionClass();
-        cargarConciertos();
 
-        Button btnCerrarSesion = findViewById(R.id.btnCerrarSesion);
-
-        btnCerrarSesion.setOnClickListener(v -> {
-            Intent intent = new Intent(ClienteActivity.this, MainActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            //LIMPIA LAS ACTIVIDADES ANTERIORES
-            startActivity(intent);
-        });
+        cargarSeiones();
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -58,32 +61,34 @@ public class ClienteActivity extends AppCompatActivity {
         });
     }
 
-    private void cargarConciertos() {
+    private void cargarSeiones() {
         ExecutorService executor = Executors.newSingleThreadExecutor();
-        executor.execute(() ->{
+        executor.execute(()->{
             try {
                 Connection con = connectionClass.CONN();
+
                 if (con != null) {
                     lista.clear();
 
-                    String sql = "SELECT id_concierto, nombre, artista, ciudad FROM concierto";
+                    String sql = "SELECT id_sesion, fecha, hora FROM sesion WHERE id_concierto = ?";
                     PreparedStatement ps = con.prepareStatement(sql);
+                    ps.setInt(1, idConcierto);
+
                     ResultSet rs = ps.executeQuery();
 
                     while (rs.next()) {
-                        int id = rs.getInt("id_concierto");
-                        String nombre = rs.getString("nombre");
-                        String artista = rs.getString("artista");
-                        String ciudad = rs.getString("ciudad");
+                        int id = rs.getInt("id_sesion");
+                        String fecha = rs.getString("fecha");
+                        String hora = rs.getString("hora");
 
-                        lista.add(new ConciertoClass(id, nombre, artista, ciudad));
+                        lista.add(new SesionClass(id, fecha, hora));
                     }
-                    runOnUiThread(() -> adapter.notifyDataSetChanged());
+
+                    runOnUiThread(()-> adapter.notifyDataSetChanged());
                     rs.close();
                     ps.close();
                     con.close();
                 }
-
             } catch (Exception e) {
                 e.printStackTrace();
             }

@@ -5,39 +5,38 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ClienteActivity">
+    tools:context=".SesionesActivity">
 
     <TextView
         android:id="@+id/tvTitulo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/pantalla_cliente"
-        android:textSize="24sp"
+        android:text="@string/sesiones_disponibles"
+        android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-    
-    
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"/>
+
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerConciertos"
+        android:id="@+id/recyclerSesiones"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
         app:layout_constraintTop_toBottomOf="@id/tvTitulo"
-        app:layout_constraintBottom_toTopOf="@id/btnCerrarSesion"
+        app:layout_constraintBottom_toBottomOf="@id/btnVolver"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="16dp"/>
 
     <Button
-        android:id="@+id/btnCerrarSesion"
-        android:layout_width="match_parent"
+        android:id="@+id/btnVolver"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/boton_logout"
+        android:text="@string/boton_volver"
+        android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_margin="16dp"/>
+        app:layout_constraintEnd_toEndOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
