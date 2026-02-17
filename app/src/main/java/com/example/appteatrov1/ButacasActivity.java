@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.content.Intent;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,6 +17,7 @@ public class ButacasActivity extends AppCompatActivity {
         DISPONIBLE,
         BLOQUEADA
     }
+    private int idsesion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,12 +30,16 @@ public class ButacasActivity extends AppCompatActivity {
         crearButacas(gridPatio, 4,4, "Patio");
         crearButacas(gridPalco, 2, 2, "Palco");
         crearButacas(gridVip, 2, 2, "VIP");
-        Button btnVolver = findViewById(R.id.btnVolver);
-        btnVolver.setOnClickListener(v ->{
-            Intent intent = new Intent(ButacasActivity.this, MainActivity.class);
-            startActivity(intent);
+
+        idsesion = getIntent().getIntExtra("id_sesion", -1);
+        if (idsesion == -1) {
+            Toast.makeText(this, "Error, sesión no válida", Toast.LENGTH_SHORT).show();
             finish();
-        });
+            return;
+        }
+        Button btnVolver = findViewById(R.id.btnVolver);
+        btnVolver.setOnClickListener(v -> finish());
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);

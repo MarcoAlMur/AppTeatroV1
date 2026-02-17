@@ -4,6 +4,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.LayoutInflater;
 import android.widget.TextView;
+import android.content.Intent;
+import android.content.Context;
 
 import java.util.List;
 
@@ -11,9 +13,12 @@ import androidx.recyclerview.widget.RecyclerView;
 public class SesionAdapter extends RecyclerView.Adapter<SesionAdapter.ViewHolder> {
 
     private List<SesionClass> lista;
+    private Context context;
 
-    public SesionAdapter(List<SesionClass> lista) {
+    public SesionAdapter(List<SesionClass> lista, Context context) {
+
         this.lista = lista;
+        this.context = context;
     }
 
     @Override
@@ -28,6 +33,11 @@ public class SesionAdapter extends RecyclerView.Adapter<SesionAdapter.ViewHolder
 
         holder.tvFecha.setText("Fecha: " + s.getFecha());
         holder.tvHora.setText("Hora: " + s.getHora());
+        holder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(context, ButacasActivity.class);
+            intent.putExtra("id_sesion", s.getId());
+            context.startActivity(intent);
+        });
     }
 
     @Override

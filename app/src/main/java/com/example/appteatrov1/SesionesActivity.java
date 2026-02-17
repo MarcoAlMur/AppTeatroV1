@@ -44,7 +44,7 @@ public class SesionesActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         lista = new ArrayList<>();
-        adapter = new SesionAdapter(lista);
+        adapter = new SesionAdapter(lista, this);
         recyclerView.setAdapter(adapter);
 
         Button btnVolver = findViewById(R.id.btnVolver);

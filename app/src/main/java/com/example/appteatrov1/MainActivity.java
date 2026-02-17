@@ -39,11 +39,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         connectionClass = new ConnectionClass();
         findViewById(R.id.button).setOnClickListener(v -> connect());
-        Button botonButacas = findViewById(R.id.botonbutacas);
-        botonButacas.setOnClickListener(v ->{
-            Intent intent = new Intent(MainActivity.this, ButacasActivity.class);
-            startActivity(intent);
-        });
+
         findViewById(R.id.btnRegistro).setOnClickListener(v ->{
             Intent intent = new Intent(MainActivity.this, RegistroActivity.class);
             startActivity(intent);
