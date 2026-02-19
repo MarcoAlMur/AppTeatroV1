@@ -3,5 +3,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="verde_disponible">#4CAF50</color>
-    <color name="rojo_bloqueado">#F44336</color>
+    <color name="rojo_vendida">#F44336</color>
+    <color name="azul_bloqueada">#2196F3</color>
+    <color name="naranja_seleccionada">#FF9800</color>
 </resources>
