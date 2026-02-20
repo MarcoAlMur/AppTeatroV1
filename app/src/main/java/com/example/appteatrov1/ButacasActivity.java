@@ -46,6 +46,9 @@ public class ButacasActivity extends AppCompatActivity {
 
         cargarButacasBD();
 
+        Button btnConfirmar = findViewById(R.id.btnConfirmarCompra);
+        btnConfirmar.setOnClickListener(v -> confirmarCompra());
+
         Button btnVolver = findViewById(R.id.btnVolver);
         btnVolver.setOnClickListener(v -> finish());
 
@@ -154,5 +157,42 @@ public class ButacasActivity extends AppCompatActivity {
             btn.setTag(R.id.tag_seleccionada, false);
             butacasSeleccionadas.remove(Integer.valueOf(idButaca));
         }
+    }
+
+    private void confirmarCompra() {
+        if (butacasSeleccionadas.isEmpty()) {
+            Toast.makeText(this, "Debes seleccionar una butaca", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        executor.execute(() ->{
+            try {
+                Connection con = connectionClass.CONN();
+
+                String sql = "UPDATE butaca_sesion SET estado = 'VENDIDA' " +
+                        "WHERE id_sesion = ? AND id_butaca = ?";
+
+                PreparedStatement ps = con.prepareStatement(sql);
+
+                for (int idButaca : butacasSeleccionadas) {
+                    ps.setInt(1, idsesion);
+                    ps.setInt(2, idButaca);
+                    ps.executeUpdate();
+                }
+
+                ps.close();
+                con.close();
+
+                runOnUiThread(()->{
+                    Toast.makeText(this, "Compra realizada correctamente", Toast.LENGTH_SHORT).show();
+                    butacasSeleccionadas.clear();
+                    cargarButacasBD();
+                });
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
     }
 }

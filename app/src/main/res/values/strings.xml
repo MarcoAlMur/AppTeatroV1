@@ -24,4 +24,27 @@
     <string name="cargando_conciertos">Cargando conciertos</string>
     <string name="sesiones_disponibles">Sesiones disponibles</string>
     <string name="ver_sesiones_disponibles">Ver sesiones disponibles</string>
+    <string name="titulo_nuevo_concierto">NUEVO CONCIERTO</string>
+    <string name="hint_nombre_concierto">Nombre del evento (Ej: El Lago de los Cisnes)</string>
+    <string name="hint_artista_concierto">Artista o Compañía</string>
+    <string name="hint_ciudad_concierto">Ciudad (Ej: Madrid)</string>
+    <string name="btn_guardar_bd">GUARDAR EN BASE DE DATOS</string>
+    <string name="btn_cancelar">Cancelar</string>
+    <string name="btn_anadir_concierto">Añadir Nuevo Concierto</string>
+    <string name="titulo_admin">Pantalla Admin</string>
+
+    <string name="titulo_cambiar_pass">Cambiar Contraseña</string>
+    <string name="hint_pass_actual">Contraseña Actual</string>
+    <string name="hint_pass_nueva">Nueva Contraseña</string>
+    <string name="hint_pass_confirmar">Confirmar Nueva Contraseña</string>
+    <string name="btn_actualizar">Actualizar Contraseña</string>
+    <string name="error_pass_no_coinciden">Las contraseñas nuevas no coinciden</string>
+    <string name="olvidaste_tu_contrase_a">¿Olvidaste tu contraseña?</string>
+    <string name="bienvenido">Bienvenido</string>
+    <string name="recuperar_contrase_a">Recuperar Contraseña</string>
+    <string name="correo_electr_nico">Correo electrónico</string>
+    <string name="actualizar_contrase_a">Actualizar Contraseña</string>
+    <string name="nueva_contrase_a">Nueva Contraseña</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="confirmar_compra">Confirmar compra</string>
 </resources>

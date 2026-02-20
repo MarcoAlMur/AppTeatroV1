@@ -26,12 +26,15 @@ public class ClienteActivity extends AppCompatActivity {
     ArrayList<ConciertoClass> lista;
     ConciertoAdapterClass adapter;
     ConnectionClass connectionClass;
+    private String emailUsuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_cliente);
+
+        emailUsuario = getIntent().getStringExtra("email");
 
         recyclerView = findViewById(R.id.recyclerConciertos);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -40,6 +43,14 @@ public class ClienteActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
 
         connectionClass = new ConnectionClass();
+
+        Button btnCambiarPass = findViewById(R.id.btnCambiarPass);
+        btnCambiarPass.setOnClickListener(v -> {
+            Intent intent = new Intent(this, CambiarContrasenaActivity.class);
+            intent.putExtra("email", emailUsuario);
+            startActivity(intent);
+        });
+
         cargarConciertos();
 
         Button btnCerrarSesion = findViewById(R.id.btnCerrarSesion);

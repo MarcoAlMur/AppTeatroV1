@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <item name="btnVolverAdmin" type="id" />
+    <item name="btnGuardarConcierto" type="id" />
+    <item name="etCiudadConcierto" type="id" />
+    <item name="etNombreConcierto" type="id" />
+    <item name="etArtistaConcierto" type="id" />
+    <item name="btnCancelar" type="id" />
     <item name="tag_seleccionada" type="id"/>
     <item name="tag_id_butaca" type="id"/>
 </resources>

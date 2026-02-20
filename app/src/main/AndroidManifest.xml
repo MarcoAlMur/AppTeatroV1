@@ -14,6 +14,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppTeatroV1">
         <activity
+            android:name=".CambiarContrasenaActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AnadirConciertoActivity"
+            android:exported="false" />
+        <activity
             android:name=".SesionesActivity"
             android:exported="false" />
         <activity
