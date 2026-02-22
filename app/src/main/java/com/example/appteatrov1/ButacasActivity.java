@@ -48,34 +48,50 @@ public class ButacasActivity extends AppCompatActivity {
     }
 
     private void crearButacas(GridLayout grid, int filas, int columnas, String zona) {
+
         for(int i = 0; i < filas; i++) {
+
             for (int j = 0; j < columnas; j++) {
-             Button btn = new Button(this);
-             btn.setText(zona + "_" + i + "_" + j);
-             btn.setTag(EstadoButaca.DISPONIBLE);
-             btn.setBackgroundColor(getColor(R.color.verde_disponible));
 
-             GridLayout.LayoutParams params = new GridLayout.LayoutParams();
-             params.width = 160;
-             params.height = 160;
-             params.setMargins(8,8,8,8);
-             btn.setLayoutParams(params);
+                Button btn = new Button(this);
 
-             btn.setOnClickListener(v -> cambiarEstado(btn));
+                // ⭐ TEXTO tipo cine: fila + numero
+                char fila = (char) ('A' + i);   // A, B, C...
+                int numero = j + 1;
 
-             grid.addView(btn);
+                btn.setText(fila + "" + numero);   // ejemplo A1
+                btn.setTextColor(android.graphics.Color.WHITE);
+                btn.setTextSize(12);
+                btn.setGravity(android.view.Gravity.CENTER);
+
+                btn.setTag(EstadoButaca.DISPONIBLE);
+
+                //  BUTACA LIBRE
+                btn.setBackgroundResource(R.drawable.butaca_libre);
+
+                GridLayout.LayoutParams params = new GridLayout.LayoutParams();
+                params.width = 150;
+                params.height = 150;
+                params.setMargins(8,8,8,8);
+                btn.setLayoutParams(params);
+
+                btn.setOnClickListener(v -> cambiarEstado(btn));
+
+                grid.addView(btn);
             }
         }
     }
-
     private void cambiarEstado(Button btn) {
+
         EstadoButaca estado = (EstadoButaca) btn.getTag();
+
         if (estado == EstadoButaca.DISPONIBLE) {
             btn.setTag(EstadoButaca.BLOQUEADA);
-            btn.setBackgroundColor(getColor(R.color.rojo_bloqueado));
+            btn.setBackgroundResource(R.drawable.butaca_ocupada);
         } else {
             btn.setTag(EstadoButaca.DISPONIBLE);
-            btn.setBackgroundColor(getColor(R.color.verde_disponible));
+            btn.setBackgroundResource(R.drawable.butaca_libre);
         }
     }
+
 }

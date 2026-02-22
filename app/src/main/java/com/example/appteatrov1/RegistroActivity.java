@@ -72,7 +72,7 @@ public class RegistroActivity extends AppCompatActivity {
                     return;
                 }
 
-                String sql = "INSERT INTO usuario (nombre, apellido, telefono, email, contraseña, rol) " +
+                String sql = "INSERT INTO usuario (nombre, apellido, telefono, email, contrasena, rol) " +
                         "VALUES (?, ?, ?, ?, ?, 'CLIENTE')";
 
                 PreparedStatement ps = con.prepareStatement(sql);

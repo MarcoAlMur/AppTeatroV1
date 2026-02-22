@@ -2,9 +2,11 @@ package com.example.appteatrov1;
 
 import android.os.Bundle;
 import android.widget.Button;
-import  android.widget.EditText;
-import  android.widget.Toast;
+import android.widget.EditText;
+import android.widget.Toast;
 import android.content.Intent;
+import android.view.MotionEvent;
+import android.text.InputType;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -41,6 +43,33 @@ public class LoginActivity extends AppCompatActivity {
         Button btnVolver = findViewById(R.id.btnVolver);
         btnVolver.setOnClickListener(v -> finish());
 
+        // 👁️ BOTÓN MOSTRAR / OCULTAR CONTRASEÑA
+        etPassword.setOnTouchListener((v, event) -> {
+            if (event.getAction() == MotionEvent.ACTION_UP) {
+
+                if (event.getRawX() >= (etPassword.getRight()
+                        - etPassword.getCompoundDrawables()[2].getBounds().width())) {
+
+                    if (etPassword.getInputType() ==
+                            (InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD)) {
+
+                        etPassword.setInputType(
+                                InputType.TYPE_CLASS_TEXT |
+                                        InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+
+                    } else {
+                        etPassword.setInputType(
+                                InputType.TYPE_CLASS_TEXT |
+                                        InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                    }
+
+                    etPassword.setSelection(etPassword.getText().length());
+                    return true;
+                }
+            }
+            return false;
+        });
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -59,11 +88,11 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         ExecutorService executor = Executors.newSingleThreadExecutor();
-        executor.execute(()->{
+        executor.execute(() -> {
             try {
                 Connection con = connectionClass.CONN();
 
-                String sql = "SELECT rol FROM usuario WHERE email = ? AND contraseña = ?";
+                String sql = "SELECT rol FROM usuario WHERE email = ? AND contrasena = ?";
                 PreparedStatement ps = con.prepareStatement(sql);
                 ps.setString(1, email);
                 ps.setString(2, password);
@@ -71,21 +100,21 @@ public class LoginActivity extends AppCompatActivity {
                 ResultSet rs = ps.executeQuery();
 
                 if (rs.next()) {
-                   String rol = rs.getString("rol");
-                   runOnUiThread(()->{
-                       Toast.makeText(this, "Login correcto", Toast.LENGTH_SHORT).show();
+                    String rol = rs.getString("rol");
+                    runOnUiThread(() -> {
+                        Toast.makeText(this, "Login correcto", Toast.LENGTH_SHORT).show();
 
-                       if (rol.equals("ADMIN")) {
-                           Intent intent = new Intent(LoginActivity.this, AdminActivity.class);
-                           startActivity(intent);
-                       } else {
-                           Intent intent = new Intent(LoginActivity.this, ClienteActivity.class);
-                           startActivity(intent);
-                       }
-                       finish();
-                  });
+                        if (rol.equals("ADMIN")) {
+                            Intent intent = new Intent(LoginActivity.this, AdminActivity.class);
+                            startActivity(intent);
+                        } else {
+                            Intent intent = new Intent(LoginActivity.this, ClienteActivity.class);
+                            startActivity(intent);
+                        }
+                        finish();
+                    });
                 } else {
-                    runOnUiThread(()->
+                    runOnUiThread(() ->
                             Toast.makeText(this, "Email o contraseña incorrectos", Toast.LENGTH_SHORT).show()
                     );
                 }
