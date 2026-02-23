@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
         connectionClass = new ConnectionClass();
-        findViewById(R.id.button).setOnClickListener(v -> connect());
+        //findViewById(R.id.button).setOnClickListener(v -> connect());
 
         findViewById(R.id.btnRegistro).setOnClickListener(v ->{
             Intent intent = new Intent(MainActivity.this, RegistroActivity.class);

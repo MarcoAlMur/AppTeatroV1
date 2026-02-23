@@ -29,6 +29,12 @@ public class ConciertoAdapterClass extends RecyclerView.Adapter<ConciertoAdapter
         holder.tvArtista.setText("Artista: " + c.getArtista());
         holder.tvCiudad.setText("Ciudad: " + c.getCiudad());
 
+        // ⭐ SUBRAYADO elegante en "Ver sesiones disponibles"
+        holder.btnVerSesiones.setPaintFlags(
+                holder.btnVerSesiones.getPaintFlags()
+                        | android.graphics.Paint.UNDERLINE_TEXT_FLAG
+        );
+
         holder.btnVerSesiones.setOnClickListener(v -> {
             Intent intent = new Intent(v.getContext(), SesionesActivity.class);
 

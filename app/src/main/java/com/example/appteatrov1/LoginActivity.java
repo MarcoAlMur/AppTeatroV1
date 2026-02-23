@@ -1,6 +1,8 @@
 package com.example.appteatrov1;
 
 import android.os.Bundle;
+import android.text.InputType;
+import android.view.MotionEvent;
 import android.widget.Button;
 import  android.widget.EditText;
 import  android.widget.Toast;
@@ -40,6 +42,34 @@ public class LoginActivity extends AppCompatActivity {
 
         Button btnVolver = findViewById(R.id.btnVolver);
         btnVolver.setOnClickListener(v -> finish());
+
+        // 👁️ BOTÓN MOSTRAR / OCULTAR CONTRASEÑA
+        etPassword.setOnTouchListener((v, event) -> {
+            if (event.getAction() == MotionEvent.ACTION_UP) {
+
+                if (event.getRawX() >= (etPassword.getRight()
+                        - etPassword.getCompoundDrawables()[2].getBounds().width())) {
+
+                    if (etPassword.getInputType() ==
+                            (InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD)) {
+
+                        etPassword.setInputType(
+                                InputType.TYPE_CLASS_TEXT |
+                                        InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+
+                    } else {
+                        etPassword.setInputType(
+                                InputType.TYPE_CLASS_TEXT |
+                                        InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                    }
+
+                    etPassword.setSelection(etPassword.getText().length());
+                    return true;
+                }
+            }
+            return false;
+        });
+
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
