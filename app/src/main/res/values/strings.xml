@@ -47,4 +47,17 @@
     <string name="nueva_contrase_a">Nueva Contraseña</string>
     <string name="cancelar">Cancelar</string>
     <string name="confirmar_compra">Confirmar compra</string>
+    <string name="resumen_de_compra">Resumen de compra</string>
+    <string name="confirmar_y_pagar">Confirmar y Pagar</string>
+    <string name="total_de_compra">Total de Compra: 0 €</string>
+    <string name="compra_realizada_correctamente">Compra realizada correctamente</string>
+    <string name="descargar_entradas_pdf">Descargar entradas PDF</string>
+    <string name="resumen_de_la_compra">Resumen de la compra</string>
+    <string name="usuario">Usuario:</string>
+    <string name="ciudad">Ciudad:</string>
+    <string name="concierto">Concierto:</string>
+    <string name="fecha_y_hora">Fecha y hora:</string>
+    <string name="butacas_pdf">Butacas:</string>
+    <string name="total_pagado_pdf">Total pagado:</string>
+    <string name="volver_a_conciertos">Volver a conciertos</string>
 </resources>

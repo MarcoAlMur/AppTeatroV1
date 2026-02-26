@@ -4,9 +4,10 @@ import android.os.Bundle;
 import android.text.InputType;
 import android.view.MotionEvent;
 import android.widget.Button;
-import  android.widget.EditText;
-import  android.widget.Toast;
+import android.widget.EditText;
+import android.widget.Toast;
 import android.content.Intent;
+import android.content.SharedPreferences;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -93,7 +94,7 @@ public class LoginActivity extends AppCompatActivity {
             try {
                 Connection con = connectionClass.CONN();
 
-                String sql = "SELECT rol FROM usuario WHERE email = ? AND contraseña = ?";
+                String sql = "SELECT nombre, rol FROM usuario WHERE email = ? AND contraseña = ?";
                 PreparedStatement ps = con.prepareStatement(sql);
                 ps.setString(1, email);
                 ps.setString(2, password);
@@ -101,7 +102,10 @@ public class LoginActivity extends AppCompatActivity {
                 ResultSet rs = ps.executeQuery();
 
                 if (rs.next()) {
+                    String nombreUsuario = rs.getString("nombre");
                    String rol = rs.getString("rol");
+                   SharedPreferences prefs = getSharedPreferences("usuario", MODE_PRIVATE);
+                   prefs.edit().putString("nombre", nombreUsuario).apply();
                    runOnUiThread(()->{
                        Toast.makeText(this, "Login correcto", Toast.LENGTH_SHORT).show();
 

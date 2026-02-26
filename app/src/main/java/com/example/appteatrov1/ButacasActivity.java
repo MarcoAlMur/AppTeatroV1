@@ -1,5 +1,6 @@
 package com.example.appteatrov1;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.GridLayout;
@@ -57,7 +58,7 @@ public class ButacasActivity extends AppCompatActivity {
 
         // Botón Confirmar Compra
         Button btnConfirmar = findViewById(R.id.btnConfirmarCompra);
-        btnConfirmar.setOnClickListener(v -> confirmarCompra());
+        btnConfirmar.setOnClickListener(v -> irAlCarrito());
 
         // Edge to edge (para padding con barra de navegación)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
@@ -94,6 +95,7 @@ public class ButacasActivity extends AppCompatActivity {
                         gridPatio.removeAllViews();
                         gridPalco.removeAllViews();
                         gridVip.removeAllViews();
+                        butacasSeleccionadas.clear();
                     });
 
                     while (rs.next()) {
@@ -105,37 +107,36 @@ public class ButacasActivity extends AppCompatActivity {
 
                         runOnUiThread(() -> {
                             Button btn = new Button(ButacasActivity.this);
-                            btn.setText(fila + numero);
-                            btn.setTag(EstadoButaca.DISPONIBLE); // default
+                            btn.setText(fila + "-" + numero);
+                            btn.setTag(EstadoButaca.DISPONIBLE);
                             btn.setTag(R.id.tag_id_butaca, idButaca);
 
-                            // Tamaño tipo cine
                             GridLayout.LayoutParams params = new GridLayout.LayoutParams();
                             params.width = 150;
                             params.height = 150;
                             params.setMargins(8,8,8,8);
                             btn.setLayoutParams(params);
 
-                            // Asignar color/estado según BD
                             switch (estadoDB) {
                                 case "DISPONIBLE":
                                     btn.setBackgroundResource(R.drawable.butaca_libre);
                                     btn.setEnabled(true);
+                                    btn.setTag(EstadoButaca.DISPONIBLE);
                                     break;
                                 case "VENDIDA":
                                     btn.setBackgroundResource(R.drawable.butaca_ocupada);
                                     btn.setEnabled(false);
+                                    btn.setTag(EstadoButaca.VENDIDA);
                                     break;
                                 case "BLOQUEADA":
                                     btn.setBackgroundResource(R.drawable.butaca_bloqueada);
                                     btn.setEnabled(false);
+                                    btn.setTag(EstadoButaca.BLOQUEADA);
                                     break;
                             }
 
-                            // Click para seleccionar/desseleccionar
-                            btn.setOnClickListener(v -> seleccionarButaca(btn, estadoDB));
+                            btn.setOnClickListener(v -> seleccionarButaca(btn));
 
-                            // Añadir al GridLayout correcto
                             if (zona.equalsIgnoreCase("Patio")) {
                                 gridPatio.addView(btn);
                             } else if (zona.equalsIgnoreCase("Palco")) {
@@ -156,56 +157,30 @@ public class ButacasActivity extends AppCompatActivity {
         });
     }
 
-    private void seleccionarButaca(Button btn, String estadoActual) {
+    private void seleccionarButaca(Button btn) {
         EstadoButaca estado = (EstadoButaca) btn.getTag();
+        int idButaca = (int) btn.getTag(R.id.tag_id_butaca);
 
-        if (estadoActual.equals("DISPONIBLE")) {
-            if (estado != EstadoButaca.SELECCIONADA) {
-                btn.setBackgroundResource(R.drawable.butaca_seleccionada);
-                btn.setTag(EstadoButaca.SELECCIONADA);
-                butacasSeleccionadas.add((int) btn.getTag(R.id.tag_id_butaca));
-            } else {
-                btn.setBackgroundResource(R.drawable.butaca_libre);
-                btn.setTag(EstadoButaca.DISPONIBLE);
-                butacasSeleccionadas.remove(Integer.valueOf((int) btn.getTag(R.id.tag_id_butaca)));
-            }
+        if (estado == EstadoButaca.DISPONIBLE) {
+            btn.setBackgroundResource(R.drawable.butaca_seleccionada);
+            btn.setTag(EstadoButaca.SELECCIONADA);
+            butacasSeleccionadas.add(idButaca);
+        } else if (estado == EstadoButaca.SELECCIONADA) {
+            btn.setBackgroundResource(R.drawable.butaca_libre);
+            btn.setTag(EstadoButaca.DISPONIBLE);
+            butacasSeleccionadas.remove(Integer.valueOf(idButaca));
         }
     }
 
-    private void confirmarCompra() {
+    private void irAlCarrito() {
         if (butacasSeleccionadas.isEmpty()) {
             Toast.makeText(this, "Debes seleccionar una butaca", Toast.LENGTH_SHORT).show();
             return;
         }
+        Intent intent = new Intent(ButacasActivity.this, CarritoActivity.class);
+        intent.putExtra("id_sesion", idsesion);
+        intent.putIntegerArrayListExtra("butaca", butacasSeleccionadas);
+        startActivity(intent);
 
-        ExecutorService executor = Executors.newSingleThreadExecutor();
-        executor.execute(() -> {
-            try {
-                Connection con = connectionClass.CONN();
-
-                String sql = "UPDATE butaca_sesion SET estado = 'VENDIDA' " +
-                        "WHERE id_sesion = ? AND id_butaca = ?";
-
-                PreparedStatement ps = con.prepareStatement(sql);
-
-                for (int idButaca : butacasSeleccionadas) {
-                    ps.setInt(1, idsesion);
-                    ps.setInt(2, idButaca);
-                    ps.executeUpdate();
-                }
-
-                ps.close();
-                con.close();
-
-                runOnUiThread(() -> {
-                    Toast.makeText(this, "Compra realizada correctamente", Toast.LENGTH_SHORT).show();
-                    butacasSeleccionadas.clear();
-                    cargarButacasBD(); // recargar las butacas actualizadas
-                });
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
     }
 }
