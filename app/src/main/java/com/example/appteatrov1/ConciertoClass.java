@@ -7,12 +7,14 @@ public class ConciertoClass {
     private String nombre;
     private String artista;
     private String ciudad;
+    private String cartel;
 
-    public ConciertoClass(int id, String nombre, String artista, String ciudad) {
+    public ConciertoClass(int id, String nombre, String artista, String ciudad, String cartel) {
         this.id = id;
         this.nombre = nombre;
         this.artista = artista;
         this.ciudad = ciudad;
+        this.cartel = cartel;
     }
 
     public int getId() {
@@ -27,5 +29,8 @@ public class ConciertoClass {
     }
     public String getCiudad() {
         return ciudad;
+    }
+    public String getCartel() {
+        return cartel;
     }
 }

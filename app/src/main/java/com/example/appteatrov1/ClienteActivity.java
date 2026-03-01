@@ -77,7 +77,7 @@ public class ClienteActivity extends AppCompatActivity {
                 if (con != null) {
                     lista.clear();
 
-                    String sql = "SELECT id_concierto, nombre, artista, ciudad FROM concierto";
+                    String sql = "SELECT id_concierto, nombre, artista, ciudad, cartel FROM concierto";
                     PreparedStatement ps = con.prepareStatement(sql);
                     ResultSet rs = ps.executeQuery();
 
@@ -86,8 +86,9 @@ public class ClienteActivity extends AppCompatActivity {
                         String nombre = rs.getString("nombre");
                         String artista = rs.getString("artista");
                         String ciudad = rs.getString("ciudad");
+                        String cartel = rs.getString("cartel");
 
-                        lista.add(new ConciertoClass(id, nombre, artista, ciudad));
+                        lista.add(new ConciertoClass(id, nombre, artista, ciudad, cartel));
                     }
                     runOnUiThread(() -> adapter.notifyDataSetChanged());
                     rs.close();

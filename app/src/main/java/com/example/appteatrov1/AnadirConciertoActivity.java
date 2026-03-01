@@ -2,8 +2,10 @@ package com.example.appteatrov1;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import java.sql.Connection;
@@ -16,6 +18,7 @@ public class AnadirConciertoActivity extends AppCompatActivity {
     private EditText etNombre, etArtista, etCiudad;
     private Button btnGuardar, btnCancelar; // Añadimos btnCancelar
     private ConnectionClass connectionClass;
+    private Spinner spinnerCartel;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -28,6 +31,14 @@ public class AnadirConciertoActivity extends AppCompatActivity {
         etArtista = findViewById(R.id.etArtistaConcierto);
         etCiudad = findViewById(R.id.etCiudadConcierto);
         btnGuardar = findViewById(R.id.btnGuardarConcierto);
+        spinnerCartel = findViewById(R.id.spinnerCartel);
+
+        String[] carteles = {"", "concierto_orquesta", "concierto_gitano", "concierto_malu"};
+
+        ArrayAdapter<String> adapterSpinner = new ArrayAdapter<>(this,
+                android.R.layout.simple_spinner_item, carteles);
+        adapterSpinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerCartel.setAdapter(adapterSpinner);
 
         // 2. BUSCAR EL BOTÓN CANCELAR (Asegúrate de que este ID sea el mismo que en tu XML)
         btnCancelar = findViewById(R.id.btnVolverAdmin);
@@ -54,6 +65,11 @@ public class AnadirConciertoActivity extends AppCompatActivity {
             return;
         }
 
+        final String cartelSeleccionado =
+                spinnerCartel.getSelectedItem().toString().trim().isEmpty()
+                        ? null
+                        : spinnerCartel.getSelectedItem().toString().trim();
+
         // Desactivamos el botón para evitar que el usuario pulse mil veces mientras guarda
         btnGuardar.setEnabled(false);
 
@@ -62,11 +78,12 @@ public class AnadirConciertoActivity extends AppCompatActivity {
             try {
                 Connection con = connectionClass.CONN();
                 if (con != null) {
-                    String sql = "INSERT INTO concierto (nombre, artista, ciudad) VALUES (?, ?, ?)";
+                    String sql = "INSERT INTO concierto (nombre, artista, ciudad, cartel) VALUES (?, ?, ?, ?)";
                     PreparedStatement ps = con.prepareStatement(sql);
                     ps.setString(1, nom);
                     ps.setString(2, art);
                     ps.setString(3, ciu);
+                    ps.setString(4, cartelSeleccionado);
 
                     ps.executeUpdate();
 

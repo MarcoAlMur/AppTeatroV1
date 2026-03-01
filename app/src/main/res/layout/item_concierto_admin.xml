@@ -13,44 +13,45 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="16dp"
-        android:gravity="center_vertical">
+        android:orientation="vertical"
+        android:padding="16dp">
 
-        <LinearLayout
-            android:layout_width="0dp"
+        <ImageView
+            android:id="@+id/imgCartelAdmin"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:scaleType="centerCrop"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/tvNombreAdmin"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/admin_text_primary"
+            android:hint="Nombre de la Obra"
+            android:layout_marginBottom="4dp"/>
 
-            <TextView
-                android:id="@+id/tvNombreAdmin"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:textColor="@color/admin_text_primary"
-                android:hint="Nombre de la Obra" />
-
-            <TextView
-                android:id="@+id/tvArtistaAdmin"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:textSize="14sp"
-                android:textColor="@color/admin_text_secondary"
-                android:hint="Artista" />
-        </LinearLayout>
+        <TextView
+            android:id="@+id/tvArtistaAdmin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textColor="@color/admin_text_secondary"
+            android:hint="Artista"
+            android:layout_marginBottom="12dp"/>
 
         <Button
             android:id="@+id/btnEliminarConcierto"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
             android:text="ELIMINAR"
             android:textSize="12sp"
             android:textStyle="bold"
             android:textColor="@android:color/white"
             android:backgroundTint="@color/color_delete"
+            android:layout_marginTop="4dp"
             app:cornerRadius="8dp" />
 
     </LinearLayout>

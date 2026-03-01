@@ -2,6 +2,7 @@ package com.example.appteatrov1;
 
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
@@ -36,10 +37,29 @@ public class ConciertoAdminAdapter extends RecyclerView.Adapter<ConciertoAdminAd
         ConciertoClass concierto = lista.get(position);
         holder.tvNombre.setText(concierto.getNombre());
         holder.tvArtista.setText(concierto.getArtista());
+        String nombreImagen = concierto.getCartel();
+        if (nombreImagen != null && !nombreImagen.isEmpty()) {
+            int resId = holder.itemView.getContext()
+                    .getResources()
+                    .getIdentifier(nombreImagen, "drawable", holder.itemView.getContext().getPackageName());
+            if (resId != 0) {
+                holder.imgCartel.setImageResource(resId);
+            } else {
+                holder.imgCartel.setImageDrawable(null);
+            }
+        } else {
+            holder.imgCartel.setImageDrawable(null);
+        }
 
         holder.btnEliminar.setOnClickListener(v -> {
             if (listener != null) {
-                listener.onEliminarClick(concierto.getId(), position);
+                int posicionActual = holder.getBindingAdapterPosition();
+                if (posicionActual != RecyclerView.NO_POSITION) {
+                    listener.onEliminarClick(
+                            lista.get(posicionActual).getId(),
+                            posicionActual
+                    );
+                }
             }
         });
     }
@@ -52,12 +72,14 @@ public class ConciertoAdminAdapter extends RecyclerView.Adapter<ConciertoAdminAd
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView tvNombre, tvArtista;
         Button btnEliminar;
+        ImageView imgCartel;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvNombre = itemView.findViewById(R.id.tvNombreAdmin);
             tvArtista = itemView.findViewById(R.id.tvArtistaAdmin);
             btnEliminar = itemView.findViewById(R.id.btnEliminarConcierto);
+            imgCartel = itemView.findViewById(R.id.imgCartelAdmin);
         }
     }
 }

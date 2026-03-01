@@ -2,6 +2,7 @@ package com.example.appteatrov1;
 
 import android.content.Intent;
 import android.view.View;
+import android.widget.ImageView;
 import android.view.ViewGroup;
 import android.view.LayoutInflater;
 import android.widget.TextView;
@@ -29,6 +30,16 @@ public class ConciertoAdapterClass extends RecyclerView.Adapter<ConciertoAdapter
         holder.tvArtista.setText("Artista: " + c.getArtista());
         holder.tvCiudad.setText("Ciudad: " + c.getCiudad());
 
+        String nombreImagen = c.getCartel();
+        if (nombreImagen != null && !nombreImagen.isEmpty()) {
+            int resId = holder.itemView.getContext()
+                    .getResources()
+                    .getIdentifier(nombreImagen, "drawable", holder.itemView.getContext().getPackageName());
+            if (resId != 0) {
+                holder.imgCartel.setImageResource(resId);
+            }
+        }
+
         // ⭐ SUBRAYADO elegante en "Ver sesiones disponibles"
         holder.btnVerSesiones.setPaintFlags(
                 holder.btnVerSesiones.getPaintFlags()
@@ -54,6 +65,7 @@ public class ConciertoAdapterClass extends RecyclerView.Adapter<ConciertoAdapter
 
         TextView tvNombre, tvArtista, tvCiudad;
         Button btnVerSesiones;
+        ImageView imgCartel;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -61,6 +73,7 @@ public class ConciertoAdapterClass extends RecyclerView.Adapter<ConciertoAdapter
             tvArtista = itemView.findViewById(R.id.tvArtista);
             tvCiudad = itemView.findViewById(R.id.tvCiudad);
             btnVerSesiones = itemView.findViewById(R.id.btnVerSesiones);
+            imgCartel = itemView.findViewById(R.id.imgCartel);
         }
     }
 }

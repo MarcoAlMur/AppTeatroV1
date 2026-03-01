@@ -3,7 +3,6 @@ package com.example.appteatrov1;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Color;
-import android.graphics.YuvImage;
 import android.graphics.pdf.PdfDocument;
 import android.os.Bundle;
 import android.os.Environment;
@@ -76,15 +75,6 @@ public class CompraRealizadaActivity extends AppCompatActivity {
                 layoutResumen.addView(tv);
             }
         }
-        /*if (listaButacas != null) {
-            for (Integer butaca : listaButacas) {
-                TextView tv = new TextView(this);
-                tv.setText("Butaca: " + butaca);
-                tv.setTextSize(16f);
-                tv.setTextColor(Color.DKGRAY);
-                layoutResumen.addView(tv);
-            }
-        }*/
 
         btnDescargar = findViewById(R.id.btnDescargar);
         btnDescargar.setOnClickListener(v -> generarPDF(concierto, ciudad, fechaSesion, horaSesion, nombreUsuario));
@@ -135,12 +125,7 @@ public class CompraRealizadaActivity extends AppCompatActivity {
                 page.getCanvas().drawText(linea, 50, y, paint);
                 y += 25;
             }
-            /*if (listaButacas != null) {
-                for (Integer butaca : listaButacas) {
-                    page.getCanvas().drawText("Butaca: " + butaca, 50, y, paint);
-                    y += 20;
-                }
-            }*/
+
            y += 20;
            paint.setTextSize(18f);
            paint.setFakeBoldText(true);

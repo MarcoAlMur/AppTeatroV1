@@ -65,7 +65,7 @@ public class AdminActivity extends AppCompatActivity {
                 Connection con = connectionClass.CONN();
                 if (con != null) {
                     List<ConciertoClass> nuevaLista = new ArrayList<>();
-                    String query = "SELECT id_concierto, nombre, artista, ciudad FROM concierto";
+                    String query = "SELECT id_concierto, nombre, artista, ciudad, cartel FROM concierto";
                     PreparedStatement ps = con.prepareStatement(query);
                     ResultSet rs = ps.executeQuery();
                     while (rs.next()) {
@@ -73,7 +73,8 @@ public class AdminActivity extends AppCompatActivity {
                                 rs.getInt("id_concierto"),
                                 rs.getString("nombre"),
                                 rs.getString("artista"),
-                                rs.getString("ciudad")
+                                rs.getString("ciudad"),
+                                rs.getString("cartel")
                         ));
                     }
                     runOnUiThread(() -> {

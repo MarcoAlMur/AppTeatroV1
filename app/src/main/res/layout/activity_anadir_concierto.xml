@@ -47,6 +47,13 @@
         android:layout_marginBottom="32dp"
         android:background="@android:drawable/editbox_background" />
 
+    <Spinner
+        android:id="@+id/spinnerCartel"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:padding="8dp"
+        android:layout_marginBottom="16dp"/>
+
     <Button
         android:id="@+id/btnGuardarConcierto"
         android:layout_width="match_parent"
