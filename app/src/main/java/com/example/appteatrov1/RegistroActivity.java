@@ -13,6 +13,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -62,38 +63,46 @@ public class RegistroActivity extends AppCompatActivity {
         }
 
         ExecutorService executor = Executors.newSingleThreadExecutor();
-        executor.execute(() ->{
+        executor.execute(() -> {
             try {
                 Connection con = connectionClass.CONN();
                 if (con == null) {
-                    runOnUiThread(() ->
-                            Toast.makeText(this, "Error de conexión", Toast.LENGTH_SHORT).show()
-                        );
+                    runOnUiThread(() -> Toast.makeText(this, "Error de conexión", Toast.LENGTH_SHORT).show());
                     return;
                 }
 
-                String sql = "INSERT INTO usuario (nombre, apellido, telefono, email, contraseña, rol) " +
-                        "VALUES (?, ?, ?, ?, ?, 'CLIENTE')";
+                // 1. Verificar si el email ya existe
+                String checkSql = "SELECT email FROM usuario WHERE email = ?";
+                PreparedStatement checkPs = con.prepareStatement(checkSql);
+                checkPs.setString(1, email);
+                ResultSet rs = checkPs.executeQuery();
 
-                PreparedStatement ps = con.prepareStatement(sql);
-                ps.setString(1, nombre);
-                ps.setString(2, apellido);
-                ps.setString(3, telefono);
-                ps.setString(4, email);
-                ps.setString(5, password);
-                ps.executeUpdate();
+                if (rs.next()) {
+                    runOnUiThread(() -> Toast.makeText(this, "Este correo ya está registrado", Toast.LENGTH_LONG).show());
+                } else {
+                    // 2. Insertar usando 'contrasena' para tu BD
+                    // Cambiado de 'contraseña' a 'contrasena'
+                    String sql = "INSERT INTO usuario (nombre, apellido, telefono, email, contrasena, rol) " +
+                            "VALUES (?, ?, ?, ?, ?, 'CLIENTE')";
 
-                runOnUiThread(() -> {
-                    Toast.makeText(this, "Usuario registrado", Toast.LENGTH_SHORT).show();
-                    finish();
-                });
+                    PreparedStatement ps = con.prepareStatement(sql);
+                    ps.setString(1, nombre);
+                    ps.setString(2, apellido);
+                    ps.setString(3, telefono);
+                    ps.setString(4, email);
+                    ps.setString(5, password);
+                    ps.executeUpdate();
 
+                    runOnUiThread(() -> {
+                        Toast.makeText(this, "Usuario registrado con éxito", Toast.LENGTH_SHORT).show();
+                        finish();
+                    });
+                }
                 con.close();
 
             } catch (Exception e) {
-                runOnUiThread(() ->
-                        Toast.makeText(this, "Error de registro", Toast.LENGTH_SHORT).show()
-                    );
+                e.printStackTrace();
+                runOnUiThread(() -> Toast.makeText(this, "Error en el servidor de registro", Toast.LENGTH_SHORT).show());
             }
         });
     }
