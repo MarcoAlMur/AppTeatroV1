@@ -1,34 +1,30 @@
 package com.example.appteatrov1;
 
-
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.LayoutInflater;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.content.Intent;
-import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import java.util.List;
-public class SesionAdapter extends RecyclerView.Adapter<SesionAdapter.ViewHolder> {
+
+public class SesionAdminAdapter extends RecyclerView.Adapter<SesionAdminAdapter.ViewHolder> {
 
     private List<SesionClass> lista;
-    private Context context;
     private OnSesionClickListener listener;
-    private String rol;
+    private String rolUsuario; // <-- Añadimos el rol
 
     public interface OnSesionClickListener {
         void onEliminarClick(int id, int posicion);
         void onEditarClick(SesionClass sesion);
-        void onSesionClick(SesionClass sesion);
+        void onSesionClick(SesionClass sesion); // <-- Para que el cliente pueda seleccionar la sesión
     }
-    public SesionAdapter(List<SesionClass> lista, Context context, String rol, OnSesionClickListener listener) {
 
+    // Modificamos el constructor para recibir el rol
+    public SesionAdminAdapter(List<SesionClass> lista, String rolUsuario, OnSesionClickListener listener) {
         this.lista = lista;
-        this.context = context;
-        this.rol = rol;
+        this.rolUsuario = rolUsuario;
         this.listener = listener;
     }
 
@@ -45,15 +41,19 @@ public class SesionAdapter extends RecyclerView.Adapter<SesionAdapter.ViewHolder
         holder.tvFecha.setText(sesion.getFecha());
         holder.tvHora.setText(sesion.getHora());
 
-        if ("ADMIN".equalsIgnoreCase(rol)) {
+        // LÓGICA DE VISIBILIDAD SEGÚN ROL
+        if (rolUsuario != null && rolUsuario.equalsIgnoreCase("ADMIN")) {
             holder.btnEliminar.setVisibility(View.VISIBLE);
             holder.btnEditar.setVisibility(View.VISIBLE);
+
             holder.btnEliminar.setOnClickListener(v -> listener.onEliminarClick(sesion.getId(), position));
             holder.btnEditar.setOnClickListener(v -> listener.onEditarClick(sesion));
-            holder.itemView.setOnClickListener(null);
         } else {
+            // Si es CLIENTE, escondemos los botones de edición
             holder.btnEliminar.setVisibility(View.GONE);
             holder.btnEditar.setVisibility(View.GONE);
+
+            // Al hacer clic en la fila completa, el cliente va a comprar/ver butacas
             holder.itemView.setOnClickListener(v -> listener.onSesionClick(sesion));
         }
     }

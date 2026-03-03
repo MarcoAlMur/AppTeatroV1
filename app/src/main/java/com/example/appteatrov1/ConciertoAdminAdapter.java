@@ -1,5 +1,6 @@
 package com.example.appteatrov1;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -13,14 +14,14 @@ import java.util.List;
 public class ConciertoAdminAdapter extends RecyclerView.Adapter<ConciertoAdminAdapter.ViewHolder> {
 
     private List<ConciertoClass> lista;
-    private OnEliminarClickListener listener;
+    private OnGestionarClickListener listener;
 
     // Interfaz para pasar el evento de clic a la Activity
-    public interface OnEliminarClickListener {
-        void onEliminarClick(int id, int posicion);
+    public interface OnGestionarClickListener {
+        void onGestionarClick(ConciertoClass concierto);
     }
 
-    public ConciertoAdminAdapter(List<ConciertoClass> lista, OnEliminarClickListener listener) {
+    public ConciertoAdminAdapter(List<ConciertoClass> lista, OnGestionarClickListener listener) {
         this.lista = lista;
         this.listener = listener;
     }
@@ -42,24 +43,12 @@ public class ConciertoAdminAdapter extends RecyclerView.Adapter<ConciertoAdminAd
             int resId = holder.itemView.getContext()
                     .getResources()
                     .getIdentifier(nombreImagen, "drawable", holder.itemView.getContext().getPackageName());
-            if (resId != 0) {
-                holder.imgCartel.setImageResource(resId);
-            } else {
-                holder.imgCartel.setImageDrawable(null);
-            }
-        } else {
-            holder.imgCartel.setImageDrawable(null);
+            holder.imgCartel.setImageResource(resId != 0 ? resId : android.R.color.transparent);
         }
 
-        holder.btnEliminar.setOnClickListener(v -> {
+        holder.btnGestionar.setOnClickListener(v -> {
             if (listener != null) {
-                int posicionActual = holder.getBindingAdapterPosition();
-                if (posicionActual != RecyclerView.NO_POSITION) {
-                    listener.onEliminarClick(
-                            lista.get(posicionActual).getId(),
-                            posicionActual
-                    );
-                }
+                listener.onGestionarClick(concierto);
             }
         });
     }
@@ -71,14 +60,14 @@ public class ConciertoAdminAdapter extends RecyclerView.Adapter<ConciertoAdminAd
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView tvNombre, tvArtista;
-        Button btnEliminar;
+        Button btnGestionar;
         ImageView imgCartel;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvNombre = itemView.findViewById(R.id.tvNombreAdmin);
             tvArtista = itemView.findViewById(R.id.tvArtistaAdmin);
-            btnEliminar = itemView.findViewById(R.id.btnEliminarConcierto);
+            btnGestionar = itemView.findViewById(R.id.btnGestionarSesiones);
             imgCartel = itemView.findViewById(R.id.imgCartelAdmin);
         }
     }

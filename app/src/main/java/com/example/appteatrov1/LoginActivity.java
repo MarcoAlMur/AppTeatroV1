@@ -5,6 +5,7 @@ import android.text.InputType;
 import android.view.MotionEvent;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -24,7 +25,7 @@ import java.util.concurrent.Executors;
 public class LoginActivity extends AppCompatActivity {
 
     EditText etEmail, etPassword;
-    Button btnLogin;
+    Button btnLogin, btnVolver;
     ConnectionClass connectionClass;
 
     @Override
@@ -37,40 +38,41 @@ public class LoginActivity extends AppCompatActivity {
         etPassword = findViewById(R.id.etPassword);
         btnLogin = findViewById(R.id.btnLogin);
 
+        btnVolver = findViewById(R.id.btnVolver);
         connectionClass = new ConnectionClass();
 
         btnLogin.setOnClickListener(v -> loginUsuario());
 
-        Button btnVolver = findViewById(R.id.btnVolver);
-        btnVolver.setOnClickListener(v -> finish());
+        if (btnVolver != null) {
+            btnVolver.setOnClickListener(v -> finish());
+        }
+
+        TextView tvOlvidar = findViewById(R.id.tvOlvidarPass);
+        if (tvOlvidar != null) {
+            tvOlvidar.setOnClickListener(v -> {
+                Intent intent = new Intent(LoginActivity.this, CambiarContrasenaActivity.class);
+                startActivity(intent);
+            });
+        }
 
         // 👁️ BOTÓN MOSTRAR / OCULTAR CONTRASEÑA
         etPassword.setOnTouchListener((v, event) -> {
             if (event.getAction() == MotionEvent.ACTION_UP) {
-
-                if (event.getRawX() >= (etPassword.getRight()
-                        - etPassword.getCompoundDrawables()[2].getBounds().width())) {
-
-                    if (etPassword.getInputType() ==
-                            (InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD)) {
-
-                        etPassword.setInputType(
-                                InputType.TYPE_CLASS_TEXT |
-                                        InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
-
-                    } else {
-                        etPassword.setInputType(
-                                InputType.TYPE_CLASS_TEXT |
-                                        InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                if (etPassword.getCompoundDrawables()[2] != null) {
+                    if (event.getRawX() >= (etPassword.getRight() - etPassword.getCompoundDrawables()[2].getBounds().width())) {
+                        if (etPassword.getInputType() == (InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD)) {
+                            etPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                        } else {
+                            etPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                        }
+                        etPassword.setSelection(etPassword.getText().length());
+                        return true;
                     }
 
-                    etPassword.setSelection(etPassword.getText().length());
-                    return true;
                 }
             }
             return false;
         });
-
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -93,6 +95,10 @@ public class LoginActivity extends AppCompatActivity {
         executor.execute(()->{
             try {
                 Connection con = connectionClass.CONN();
+                if (con == null) {
+                    runOnUiThread(() -> Toast.makeText(this, "Error de conexión", Toast.LENGTH_SHORT).show());
+                    return;
+                }
 
                 String sql = "SELECT nombre, rol FROM usuario WHERE email = ? AND contraseña = ?";
                 PreparedStatement ps = con.prepareStatement(sql);
@@ -103,21 +109,29 @@ public class LoginActivity extends AppCompatActivity {
 
                 if (rs.next()) {
                     String nombreUsuario = rs.getString("nombre");
-                   String rol = rs.getString("rol");
-                   SharedPreferences prefs = getSharedPreferences("usuario", MODE_PRIVATE);
-                   prefs.edit().putString("nombre", nombreUsuario).apply();
-                   runOnUiThread(()->{
-                       Toast.makeText(this, "Login correcto", Toast.LENGTH_SHORT).show();
+                    String rolUsuario = rs.getString("rol");
 
-                       if (rol.equals("ADMIN")) {
-                           Intent intent = new Intent(LoginActivity.this, AdminActivity.class);
-                           startActivity(intent);
-                       } else {
-                           Intent intent = new Intent(LoginActivity.this, ClienteActivity.class);
-                           startActivity(intent);
-                       }
-                       finish();
-                  });
+                    // Guardar los datos de la sesión localmente
+                    SharedPreferences prefs = getSharedPreferences("SesionUsuario", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putString("nombre", nombreUsuario);
+                    editor.putString("rol", rolUsuario);
+                    editor.putString("email", email);
+                    editor.apply();
+
+                    runOnUiThread(() -> {
+                        Toast.makeText(this, "Bienvenido " + nombreUsuario, Toast.LENGTH_SHORT).show();
+
+                        // Redirección según el rol obtenido de la base de datos
+                        Intent intent;
+                        if (rolUsuario != null && rolUsuario.equalsIgnoreCase("ADMIN")) {
+                            intent = new Intent(LoginActivity.this, AdminActivity.class);
+                        } else {
+                            intent = new Intent(LoginActivity.this, ClienteActivity.class);
+                        }
+                        startActivity(intent);
+                        finish();
+                    });
                 } else {
                     runOnUiThread(()->
                             Toast.makeText(this, "Email o contraseña incorrectos", Toast.LENGTH_SHORT).show()
