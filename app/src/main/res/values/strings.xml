@@ -60,4 +60,14 @@
     <string name="butacas_pdf">Butacas:</string>
     <string name="total_pagado_pdf">Total pagado:</string>
     <string name="volver_a_conciertos">Volver a conciertos</string>
+    <string name="titulo_sesiones">Sesiones - %1$s</string>
+    <string name="eliminar_titulo">Eliminar</string>
+    <string name="eliminar_mensaje">¿Borrar esta sesión?</string>
+    <string name="opcion_si">Sí</string>
+    <string name="opcion_no">No</string>
+    <string name="hint_fecha">Fecha</string>
+    <string name="hint_hora">Hora</string>
+    <string name="btn_guardar">Guardar</string>
+    <string name="error_campos_vacios">Completa todos los campos</string>
+    <string name="msg_sesion_guardada">Sesión guardada</string>
 </resources>

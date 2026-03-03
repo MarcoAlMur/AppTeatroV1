@@ -1,14 +1,18 @@
 package com.example.appteatrov1;
 
+import android.content.Context;
 import android.content.Intent;
-import android.view.View;
-import android.widget.ImageView;
-import android.view.ViewGroup;
+import android.graphics.Paint;
 import android.view.LayoutInflater;
-import android.widget.TextView;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
+
 public class ConciertoAdapterClass extends RecyclerView.Adapter<ConciertoAdapterClass.ViewHolder> {
 
     private List<ConciertoClass> lista;
@@ -17,42 +21,37 @@ public class ConciertoAdapterClass extends RecyclerView.Adapter<ConciertoAdapter
         this.lista = lista;
     }
 
+    @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_concierto, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ConciertoClass c = lista.get(position);
+        Context context = holder.itemView.getContext();
+
         holder.tvNombre.setText(c.getNombre());
         holder.tvArtista.setText("Artista: " + c.getArtista());
         holder.tvCiudad.setText("Ciudad: " + c.getCiudad());
 
         String nombreImagen = c.getCartel();
         if (nombreImagen != null && !nombreImagen.isEmpty()) {
-            int resId = holder.itemView.getContext()
-                    .getResources()
-                    .getIdentifier(nombreImagen, "drawable", holder.itemView.getContext().getPackageName());
+            int resId = context.getResources().getIdentifier(nombreImagen, "drawable", context.getPackageName());
             if (resId != 0) {
                 holder.imgCartel.setImageResource(resId);
             }
         }
 
-        // ⭐ SUBRAYADO elegante en "Ver sesiones disponibles"
-        holder.btnVerSesiones.setPaintFlags(
-                holder.btnVerSesiones.getPaintFlags()
-                        | android.graphics.Paint.UNDERLINE_TEXT_FLAG
-        );
+        holder.btnVerSesiones.setPaintFlags(holder.btnVerSesiones.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
         holder.btnVerSesiones.setOnClickListener(v -> {
-            Intent intent = new Intent(v.getContext(), SesionesActivity.class);
-
+            Intent intent = new Intent(context, SesionesActivity.class);
             intent.putExtra("id_concierto", c.getId());
             intent.putExtra("nombre_concierto", c.getNombre());
-
-            v.getContext().startActivity(intent);
+            context.startActivity(intent);
         });
     }
 
@@ -62,7 +61,6 @@ public class ConciertoAdapterClass extends RecyclerView.Adapter<ConciertoAdapter
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-
         TextView tvNombre, tvArtista, tvCiudad;
         Button btnVerSesiones;
         ImageView imgCartel;

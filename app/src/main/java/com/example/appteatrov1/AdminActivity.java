@@ -1,6 +1,7 @@
 package com.example.appteatrov1;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.Toast;
@@ -33,30 +34,36 @@ public class AdminActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         listaConciertos = new ArrayList<>();
-        adapter = new ConciertoAdminAdapter(listaConciertos, (id, posicion) -> {
-            eliminarConciertoDeBD(id, posicion);
+
+        // CONFIGURACIÓN DEL ADAPTADOR PARA GESTIONAR SESIONES
+        adapter = new ConciertoAdminAdapter(listaConciertos, concierto -> {
+            Intent intent = new Intent(AdminActivity.this, SesionesActivity.class);
+            intent.putExtra("id_concierto", concierto.getId());
+            intent.putExtra("nombre_concierto", concierto.getNombre());
+            startActivity(intent);
         });
+
         recyclerView.setAdapter(adapter);
 
-        // --- BOTÓN AÑADIR NUEVO ---
         Button btnAnadir = findViewById(R.id.btnIrAnadir);
         btnAnadir.setOnClickListener(v -> {
             startActivity(new Intent(this, AnadirConciertoActivity.class));
         });
 
-        // --- BOTÓN CERRAR SESIÓN (TU BOTÓN MORADO) ---
         Button btnLogout = findViewById(R.id.btnCerrarSesion);
-        btnLogout.setOnClickListener(v -> {
-            // Regresamos al MainActivity (Login)
-            Intent intent = new Intent(AdminActivity.this, MainActivity.class);
+        btnLogout.setOnClickListener(v -> cerrarSesion());
+    }
 
-            // Flags para que el usuario no pueda volver atrás al panel admin
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+    private void cerrarSesion() {
+        // Borramos los datos de SharedPreferences al salir
+        SharedPreferences prefs = getSharedPreferences("SesionUsuario", MODE_PRIVATE);
+        prefs.edit().clear().apply();
 
-            startActivity(intent);
-            Toast.makeText(this, "Sesión finalizada", Toast.LENGTH_SHORT).show();
-            finish();
-        });
+        Intent intent = new Intent(AdminActivity.this, LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        Toast.makeText(this, "Sesión cerrada", Toast.LENGTH_SHORT).show();
+        finish();
     }
 
     private void cargarConciertos() {
@@ -82,32 +89,6 @@ public class AdminActivity extends AppCompatActivity {
                         listaConciertos.addAll(nuevaLista);
                         adapter.notifyDataSetChanged();
                     });
-                    con.close();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
-    }
-
-    private void eliminarConciertoDeBD(int id, int posicion) {
-        executorService.execute(() -> {
-            try {
-                Connection con = connectionClass.CONN();
-                if (con != null) {
-                    String query = "DELETE FROM concierto WHERE id_concierto = ?";
-                    PreparedStatement ps = con.prepareStatement(query);
-                    ps.setInt(1, id);
-                    int filas = ps.executeUpdate();
-                    if (filas > 0) {
-                        runOnUiThread(() -> {
-                            if (posicion < listaConciertos.size()) {
-                                listaConciertos.remove(posicion);
-                                adapter.notifyItemRemoved(posicion);
-                                adapter.notifyItemRangeChanged(posicion, listaConciertos.size());
-                            }
-                        });
-                    }
                     con.close();
                 }
             } catch (Exception e) {
