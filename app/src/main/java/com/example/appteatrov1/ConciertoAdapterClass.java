@@ -35,12 +35,23 @@ public class ConciertoAdapterClass extends RecyclerView.Adapter<ConciertoAdapter
         holder.tvCiudad.setText("Ciudad: " + c.getCiudad());
 
         String nombreImagen = c.getCartel();
+
+        int resId = 0;
+
         if (nombreImagen != null && !nombreImagen.isEmpty()) {
-            int resId = context.getResources().getIdentifier(nombreImagen, "drawable", context.getPackageName());
+            resId = context.getResources().getIdentifier(nombreImagen, "drawable", context.getPackageName());
             if (resId != 0) {
                 holder.imgCartel.setImageResource(resId);
             }
         }
+
+        int finalResId = resId;
+
+        holder.imgCartel.setOnClickListener(v -> {
+            if (finalResId != 0) {
+                ImagenDialog.mostrar(context, finalResId);
+            }
+        });
 
         holder.btnVerSesiones.setPaintFlags(holder.btnVerSesiones.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
