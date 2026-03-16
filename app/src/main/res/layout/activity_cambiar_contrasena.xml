@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/fondo"
+        android:scaleType="centerCrop" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#88000000" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:padding="24dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="24dp"
+            android:background="#D91E140F">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/recuperar_contrase_a"
+                android:textSize="28sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/white"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="28dp" />
+
+            <EditText
+                android:id="@+id/etEmailRecuperacion"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="@string/correo_electr_nico"
+                android:inputType="textEmailAddress"
+                android:textColor="@android:color/white"
+                android:textColorHint="#CCFFFFFF"
+                android:padding="12dp"
+                android:layout_marginBottom="16dp"
+                android:background="#40FFFFFF" />
+
+            <EditText
+                android:id="@+id/etNuevaPassword"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="@string/nueva_contrase_a"
+                android:inputType="textPassword"
+                android:textColor="@android:color/white"
+                android:textColorHint="#CCFFFFFF"
+                android:padding="12dp"
+                android:layout_marginBottom="16dp"
+                android:background="#40FFFFFF" />
+
+            <EditText
+                android:id="@+id/etCodigoVerificacion"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="@string/codigo_recu"
+                android:inputType="number"
+                android:textColor="@android:color/white"
+                android:textColorHint="#CCFFFFFF"
+                android:padding="12dp"
+                android:layout_marginBottom="24dp"
+                android:background="#40FFFFFF" />
+
+            <Button
+                android:id="@+id/btnActualizarPass"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:text="@string/actualizar_contrase_a"
+                android:textStyle="bold"
+                android:textColor="#2A1800"
+                android:backgroundTint="#E8D2A8" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="18dp"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/btnVolverRecuperacion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/cancelar"
+                    android:textColor="@android:color/white"
+                    android:textSize="16sp"
+                    android:background="@android:color/transparent"
+                    android:backgroundTint="@null"
+                    android:minWidth="0dp"
+                    android:minHeight="0dp"
+                    android:paddingStart="0dp"
+                    android:paddingTop="0dp"
+                    android:paddingEnd="0dp"
+                    android:paddingBottom="0dp" />
+
+                <View
+                    android:layout_width="90dp"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="4dp"
+                    android:background="@android:color/white" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</FrameLayout>

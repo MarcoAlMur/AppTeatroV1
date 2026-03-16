@@ -2,4 +2,14 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="verde_disponible">#4CAF50</color>
+    <color name="rojo_vendida">#F44336</color>
+    <color name="azul_bloqueada">#2196F3</color>
+    <color name="naranja_seleccionada">#FF9800</color>
+    <color name="admin_card_background">#FFFFFF</color>
+    <color name="admin_text_primary">#212121</color>
+    <color name="admin_text_secondary">#757575</color>
+    <color name="color_delete">#E53935</color>
+    <color name="color_accent_admin">#6200EE</color>
+    <color name="admin_surface_variant">#F5F5F5</color>
 </resources>

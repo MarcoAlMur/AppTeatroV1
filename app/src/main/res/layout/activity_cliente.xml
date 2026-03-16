@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -7,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- Fondo -->
+    <!-- Fondo teatro -->
     <ImageView
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -18,84 +17,91 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
-    <!-- Oscurecer fondo -->
+    <!-- Oscuro -->
     <View
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="#80000000"
+        android:background="#88000000"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
-    <!-- TITULO -->
+    <!-- Título -->
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/tvTitulo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TEATRO"
-        android:textSize="42sp"
+        android:text="Conciertos Disponibles"
+        android:textSize="26sp"
+        android:textStyle="bold"
         android:textColor="#FFFFFF"
-        android:letterSpacing="0.2"
-        android:textStyle="normal"
-        android:layout_marginTop="120dp"
+        android:layout_marginTop="140dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
-    <!-- BOTON REGISTRO -->
-    <Button
-        android:id="@+id/btnRegistro"
+    <!-- Lista -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerConciertos"
         android:layout_width="0dp"
-        android:layout_height="48dp"
-        android:text="Regístrate"
-        android:textColor="#FFFFFF"
-        android:textSize="18sp"
-        android:background="@drawable/boton_transparente"
-        android:backgroundTint="@null"
-        android:stateListAnimator="@null"
-        android:layout_marginStart="40dp"
-        android:layout_marginEnd="40dp"
-        android:layout_marginBottom="20dp"
-        app:layout_constraintBottom_toTopOf="@id/btnLogin"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintTop_toBottomOf="@id/tvTitulo"
+        app:layout_constraintBottom_toTopOf="@id/btnCambiarPass"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
-    <!-- Línea debajo registro -->
-    <View
-        android:layout_width="140dp"
-        android:layout_height="1dp"
-        android:background="#80FFFFFF"
-        app:layout_constraintTop_toBottomOf="@id/btnRegistro"
-        app:layout_constraintStart_toStartOf="@id/btnRegistro"
-        app:layout_constraintEnd_toEndOf="@id/btnRegistro"/>
-
-    <!-- BOTON LOGIN -->
+    <!-- Botón Cambiar Contraseña -->
     <Button
-        android:id="@+id/btnLogin"
+        android:id="@+id/btnCambiarPass"
         android:layout_width="0dp"
-        android:layout_height="48dp"
-        android:text="Inicia sesión"
+        android:layout_height="wrap_content"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
-        android:background="@drawable/boton_transparente"
-        android:backgroundTint="@null"
-        android:stateListAnimator="@null"
+        android:background="@drawable/boton_oscuro"
+        android:text="@string/titulo_cambiar_pass"
         android:layout_marginStart="40dp"
         android:layout_marginEnd="40dp"
-        android:layout_marginBottom="80dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toTopOf="@id/btnCerrarSesion"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+    <!-- Separador debajo del botón cambiar contraseña-->
+    <View
+        android:layout_width="170dp"
+        android:layout_height="1dp"
+        android:background="#80FFFFFF"
+        app:layout_constraintTop_toBottomOf="@id/btnCambiarPass"
+        app:layout_constraintStart_toStartOf="@id/btnCambiarPass"
+        app:layout_constraintEnd_toEndOf="@id/btnCambiarPass"/>
 
+
+
+    <!-- Botón Cerrar Sesión -->
+    <Button
+        android:id="@+id/btnCerrarSesion"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:text="Cerrar sesión"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        android:background="@drawable/boton_oscuro"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="40dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
-    <!-- Línea debajo login -->
+    <!-- Separador debajo del botón Cerrar Sesión -->
     <View
         android:layout_width="140dp"
         android:layout_height="1dp"
         android:background="#80FFFFFF"
-        app:layout_constraintTop_toBottomOf="@id/btnLogin"
-        app:layout_constraintStart_toStartOf="@id/btnLogin"
-        app:layout_constraintEnd_toEndOf="@id/btnLogin"/>
+        app:layout_constraintTop_toBottomOf="@id/btnCerrarSesion"
+        app:layout_constraintStart_toStartOf="@id/btnCerrarSesion"
+        app:layout_constraintEnd_toEndOf="@id/btnCerrarSesion"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

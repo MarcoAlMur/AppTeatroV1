@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="24dp">
+
+    <TextView
+        android:id="@+id/tvTituloDialogo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Gestionar Sesión"
+        android:textAlignment="center"
+        android:textColor="#333333"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="20dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Fecha del evento"
+        android:textSize="12sp"
+        android:textColor="#757575" />
+
+    <EditText
+        android:id="@+id/etFechaDialogo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
+        android:clickable="true"
+        android:focusable="false"
+        android:hint="Seleccione Fecha..."
+        android:inputType="none"
+        android:drawablePadding="10dp"
+        android:drawableStart="@android:drawable/ic_menu_my_calendar" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hora del evento"
+        android:textSize="12sp"
+        android:textColor="#757575" />
+
+    <EditText
+        android:id="@+id/etHoraDialogo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="false"
+        android:hint="Seleccione hora..."
+        android:inputType="none"
+        android:drawablePadding="10dp"
+        android:drawableStart="@android:drawable/ic_menu_recent_history" />
+
+</LinearLayout>

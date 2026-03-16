@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:gravity="center_horizontal"
+    android:background="#F5F5F5">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/titulo_nuevo_concierto"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="#333333"
+        android:layout_marginBottom="32dp" />
+
+    <EditText
+        android:id="@+id/etNombreConcierto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/hint_nombre_concierto"
+        android:inputType="textCapSentences"
+        android:padding="12dp"
+        android:layout_marginBottom="16dp"
+        android:background="@android:drawable/editbox_background" />
+
+    <EditText
+        android:id="@+id/etArtistaConcierto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/hint_artista_concierto"
+        android:inputType="textCapWords"
+        android:padding="12dp"
+        android:layout_marginBottom="16dp"
+        android:background="@android:drawable/editbox_background" />
+
+    <EditText
+        android:id="@+id/etCiudadConcierto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/hint_ciudad_concierto"
+        android:inputType="textCapWords"
+        android:padding="12dp"
+        android:layout_marginBottom="32dp"
+        android:background="@android:drawable/editbox_background" />
+
+    <Spinner
+        android:id="@+id/spinnerCartel"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:padding="8dp"
+        android:layout_marginBottom="16dp"/>
+
+    <Button
+        android:id="@+id/btnGuardarConcierto"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="@string/btn_guardar_bd"
+        android:textStyle="bold"
+        android:backgroundTint="#4CAF50"
+        android:textColor="@android:color/white" />
+
+    <Button
+        android:id="@+id/btnVolverAdmin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_cancelar"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_marginTop="16dp"
+        android:textColor="#666666" />
+
+</LinearLayout>
