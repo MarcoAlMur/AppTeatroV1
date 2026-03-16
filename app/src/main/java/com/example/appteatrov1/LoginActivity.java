@@ -3,7 +3,6 @@ package com.example.appteatrov1;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.MotionEvent;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,7 +24,7 @@ import java.util.concurrent.Executors;
 public class LoginActivity extends AppCompatActivity {
 
     EditText etEmail, etPassword;
-    Button btnLogin, btnVolver;
+    TextView btnLogin, btnVolver;
     ConnectionClass connectionClass;
 
     @Override
@@ -55,7 +54,6 @@ public class LoginActivity extends AppCompatActivity {
             });
         }
 
-        // 👁️ BOTÓN MOSTRAR / OCULTAR CONTRASEÑA
         etPassword.setOnTouchListener((v, event) -> {
             if (event.getAction() == MotionEvent.ACTION_UP) {
                 if (etPassword.getCompoundDrawables()[2] != null) {
@@ -111,7 +109,6 @@ public class LoginActivity extends AppCompatActivity {
                     String nombreUsuario = rs.getString("nombre");
                     String rolUsuario = rs.getString("rol");
 
-                    // Guardar los datos de la sesión localmente
                     SharedPreferences prefs = getSharedPreferences("SesionUsuario", MODE_PRIVATE);
                     SharedPreferences.Editor editor = prefs.edit();
                     editor.putString("nombre", nombreUsuario);
@@ -122,7 +119,7 @@ public class LoginActivity extends AppCompatActivity {
                     runOnUiThread(() -> {
                         Toast.makeText(this, "Bienvenido " + nombreUsuario, Toast.LENGTH_SHORT).show();
 
-                        // Redirección según el rol obtenido de la base de datos
+
                         Intent intent;
                         if (rolUsuario != null && rolUsuario.equalsIgnoreCase("ADMIN")) {
                             intent = new Intent(LoginActivity.this, AdminActivity.class);

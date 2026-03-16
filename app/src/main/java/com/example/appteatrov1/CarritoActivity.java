@@ -5,6 +5,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.graphics.Color;
 import android.content.Intent;
 
 import androidx.activity.EdgeToEdge;
@@ -46,7 +47,7 @@ public class CarritoActivity extends AppCompatActivity {
         tvConcierto = findViewById(R.id.tvConcierto);
         tvCiudad = findViewById(R.id.tvCiudad);
         tvFecha = findViewById(R.id.tvFecha);
-        Button btnPagar = findViewById(R.id.btnPagar);
+        Button btnPagar = findViewById(R.id.btnDescargar);
         Button btnVolver = findViewById(R.id.btnVolver);
 
         idSesion = getIntent().getIntExtra("id_sesion", -1);
@@ -133,6 +134,7 @@ public class CarritoActivity extends AppCompatActivity {
                         runOnUiThread(() ->{
                             TextView tv = new TextView(this);
                             tv.setText(lineaTexto);
+                            tv.setTextColor(Color.WHITE);
                             layoutResumen.addView(tv);
                         });
                     }
