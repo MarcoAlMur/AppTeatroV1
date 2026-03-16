@@ -38,7 +38,7 @@ public class CambiarContrasenaActivity extends AppCompatActivity {
         codigoGenerado = new Random().nextInt(900000) + 100000;
 
         // Lo mostramos en un Toast para que el usuario sepa cuál es (Simulando el SMS/Email)
-        Toast.makeText(this, "Código de verificación enviado ", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Código de verificación enviado: " + codigoGenerado, Toast.LENGTH_LONG).show();
 
         btnActualizar.setOnClickListener(v -> procesoRecuperacion());
         btnVolver.setOnClickListener(v -> finish());
