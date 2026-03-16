@@ -1,11 +1,14 @@
 package com.example.appteatrov1;
 
+
 import android.os.Bundle;
+import android.graphics.Color;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.content.Intent;
+
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -46,7 +49,7 @@ public class CarritoActivity extends AppCompatActivity {
         tvConcierto = findViewById(R.id.tvConcierto);
         tvCiudad = findViewById(R.id.tvCiudad);
         tvFecha = findViewById(R.id.tvFecha);
-        Button btnPagar = findViewById(R.id.btnPagar);
+        Button btnPagar = findViewById(R.id.btnDescargar);
         Button btnVolver = findViewById(R.id.btnVolver);
 
         idSesion = getIntent().getIntExtra("id_sesion", -1);
@@ -133,7 +136,10 @@ public class CarritoActivity extends AppCompatActivity {
                         runOnUiThread(() ->{
                             TextView tv = new TextView(this);
                             tv.setText(lineaTexto);
+                            tv.setTextColor(Color.WHITE);
+
                             layoutResumen.addView(tv);
+
                         });
                     }
                     rs.close();
