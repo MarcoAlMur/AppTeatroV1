@@ -73,4 +73,5 @@
     <string name="opcion_no">No</string>
     <string name="eliminar_mensaje">¿Borrar esta sesión?</string>
     <string name="titulo_sesiones">Sesiones - %1$s</string>
+    <string name="has_olvidado_tu_contrase_a">¿Has olvidado tu contraseña?</string>
 </resources>
