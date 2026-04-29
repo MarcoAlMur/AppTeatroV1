@@ -3,6 +3,7 @@ package com.example.appteatrov1;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import java.sql.Connection;
@@ -11,9 +12,8 @@ import java.sql.ResultSet;
 import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-
 public class CambiarContrasenaActivity extends AppCompatActivity {
-
+    private TextView tvCodigoFijo;
     private EditText etEmail, etNuevaPass, etCodigo;
     private int codigoGenerado;
     private Button btnActualizar, btnVolver;
@@ -28,6 +28,7 @@ public class CambiarContrasenaActivity extends AppCompatActivity {
         etEmail = findViewById(R.id.etEmailRecuperacion);
         etNuevaPass = findViewById(R.id.etNuevaPassword);
         etCodigo = findViewById(R.id.etCodigoVerificacion);
+        tvCodigoFijo = findViewById(R.id.tvCodigoFijo); // <--- 2. Vincular
         btnActualizar = findViewById(R.id.btnActualizarPass);
         btnVolver = findViewById(R.id.btnVolverRecuperacion);
 
@@ -38,8 +39,7 @@ public class CambiarContrasenaActivity extends AppCompatActivity {
         codigoGenerado = new Random().nextInt(900000) + 100000;
 
         // Lo mostramos en un Toast para que el usuario sepa cuál es (Simulando el SMS/Email)
-        Toast.makeText(this, "Código de verificación enviado: " + codigoGenerado, Toast.LENGTH_LONG).show();
-
+        tvCodigoFijo.setText("Código de verificación: " + codigoGenerado);
         btnActualizar.setOnClickListener(v -> procesoRecuperacion());
         btnVolver.setOnClickListener(v -> finish());
     }

@@ -84,7 +84,7 @@ public class RegistroActivity extends AppCompatActivity {
                 } else {
                     // 2. Insertar usando 'contrasena' para tu BD
                     // Cambiado de 'contraseña' a 'contrasena'
-                    String sql = "INSERT INTO usuario (nombre, apellido, telefono, email, contraseña, rol) " +
+                    String sql = "INSERT INTO usuario (nombre, apellido, telefono, email, contrasena, rol) " +
                             "VALUES (?, ?, ?, ?, ?, 'CLIENTE')";
 
                     PreparedStatement ps = con.prepareStatement(sql);

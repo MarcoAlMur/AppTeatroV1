@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.Objects;
 public class ConnectionClass {
-    protected static String db = "estructura";
+    protected static String db = "mydb";
 
     protected static String ip = "10.0.2.2";
 
@@ -12,7 +12,7 @@ public class ConnectionClass {
 
     protected static String usuario = "root";
 
-    protected static String password = "Marco27";
+    protected static String password = "roku987654";
 
     public Connection CONN() {
         Connection conn = null;

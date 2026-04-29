@@ -65,17 +65,30 @@
             android:layout_marginBottom="16dp"
             android:background="#40FFFFFF" />
 
-        <EditText
-            android:id="@+id/etCodigoVerificacion"
+        <TextView
+            android:id="@+id/tvCodigoFijo"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:hint="@string/codigo_recu"
-            android:inputType="number"
-            android:textColor="@android:color/white"
-            android:textColorHint="#CCFFFFFF"
-            android:padding="12dp"
-            android:layout_marginBottom="24dp"
-            android:background="#40FFFFFF" />
+            android:layout_height="wrap_content"
+            android:text="Código: 000000"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="#FFD700"
+            android:gravity="center"
+            android:padding="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="#33FFD700" />
+        <EditText
+        android:id="@+id/etCodigoVerificacion"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:hint="@string/codigo_recu"
+        android:inputType="number"
+        android:textColor="@android:color/white"
+        android:textColorHint="#CCFFFFFF"
+        android:padding="12dp"
+        android:layout_marginBottom="24dp"
+        android:background="#40FFFFFF" />
+
 
         <Button
             android:id="@+id/btnActualizarPass"

@@ -98,7 +98,7 @@ public class LoginActivity extends AppCompatActivity {
                     return;
                 }
 
-                String sql = "SELECT nombre, rol FROM usuario WHERE email = ? AND contraseña = ?";
+                String sql = "SELECT nombre, rol FROM usuario WHERE email = ? AND contrasena = ?";
                 PreparedStatement ps = con.prepareStatement(sql);
                 ps.setString(1, email);
                 ps.setString(2, password);
